@@ -41,64 +41,64 @@ public class Star : MonoBehaviour
     void Start()
     {
         gameObject.tag = "Star"; //make sure this mf is tagged as a star
-        mRenderer.enabled = false; //disable rendering until it's placed and anchored
+        //mRenderer.enabled = false; //disable rendering until it's placed and anchored
     }
 
-	void Update()
-	{
+	//void Update()
+	//{
 
-        //Google ARCore tutorial code for plane detection
-        // The tracking state must be FrameTrackingState.Tracking
-        // in order to access the Frame.
-        if (Session.Status != SessionStatus.Tracking) return;
+ //       //Google ARCore tutorial code for plane detection
+ //       // The tracking state must be FrameTrackingState.Tracking
+ //       // in order to access the Frame.
+ //       if (Session.Status != SessionStatus.Tracking) return;
 
-        if (detectedPlane == null) return;
+ //       if (detectedPlane == null) return;
 
-        // Check for the plane being subsumed.
-        // If the plane has been subsumed switch attachment to the subsuming plane.
-        while (detectedPlane.SubsumedBy != null)
-        {
-            detectedPlane = detectedPlane.SubsumedBy;
-        }
+ //       // Check for the plane being subsumed.
+ //       // If the plane has been subsumed switch attachment to the subsuming plane.
+ //       while (detectedPlane.SubsumedBy != null)
+ //       {
+ //           detectedPlane = detectedPlane.SubsumedBy;
+ //       }
 
-        // Move the position to stay in the same place relative to plane
-        transform.position = new Vector3(transform.position.x,
-                    detectedPlane.CenterPose.position.y + yOffset, transform.position.z);
+ //       // Move the position to stay in the same place relative to plane
+ //       transform.position = new Vector3(transform.position.x,
+ //                   detectedPlane.CenterPose.position.y + yOffset, transform.position.z);
 
-        spawnPlane.transform.LookAt(Camera.main.transform, Vector3.up); //ensure collider  always faces camera
-	}
+ //       spawnPlane.transform.LookAt(Camera.main.transform, Vector3.up); //ensure collider  always faces camera
+	//}
 	
-    public void SetSelectedPlane(DetectedPlane detectedPlane)
-    {
-        this.detectedPlane = detectedPlane; //select plane
-        CreateAnchor(); //set anchor
-    }
+    //public void SetSelectedPlane(DetectedPlane detectedPlane)
+    //{
+    //    this.detectedPlane = detectedPlane; //select plane
+    //    CreateAnchor(); //set anchor
+    //}
 
-    void CreateAnchor()
-    {
-        // Create the position of the anchor by raycasting a point towards
-        // the top of the screen.
-        Vector2 pos = new Vector2(Screen.width * .5f, Screen.height * .90f);
-        Ray ray = Camera.main.ScreenPointToRay(pos);
-        Vector3 anchorPosition = ray.GetPoint(5f) + (Vector3.up * .7f); //spawns star above plane, not on it
+    //void CreateAnchor()
+    //{
+    //    // Create the position of the anchor by raycasting a point towards
+    //    // the top of the screen.
+    //    Vector2 pos = new Vector2(Screen.width * .5f, Screen.height * .90f);
+    //    Ray ray = Camera.main.ScreenPointToRay(pos);
+    //    Vector3 anchorPosition = ray.GetPoint(5f) + (Vector3.up * .7f); //spawns star above plane, not on it
 
-        // Create the anchor at that point.
-        if (anchor != null)
-        {
-            Destroy(anchor);
-        }
+    //    // Create the anchor at that point.
+    //    if (anchor != null)
+    //    {
+    //        Destroy(anchor);
+    //    }
 
-        starPose = new Pose(anchorPosition, Quaternion.identity);
-        anchor = detectedPlane.CreateAnchor(starPose);
+    //    starPose = new Pose(anchorPosition, Quaternion.identity);
+    //    anchor = detectedPlane.CreateAnchor(starPose);
 
-        // Attach the star to the anchor.
-        transform.position = anchorPosition;
-        transform.SetParent(anchor.transform);
+    //    // Attach the star to the anchor.
+    //    transform.position = anchorPosition;
+    //    transform.SetParent(anchor.transform);
 
-        // Record the y offset from the plane.
-        yOffset = transform.position.y - detectedPlane.CenterPose.position.y;
+    //    // Record the y offset from the plane.
+    //    yOffset = transform.position.y - detectedPlane.CenterPose.position.y;
 
-        mRenderer.enabled = true; // enable the renderer
-        starEnabled = true; //tell other scripts that star has been anchored
-    }
+    //    mRenderer.enabled = true; // enable the renderer
+    //    starEnabled = true; //tell other scripts that star has been anchored
+    //}
 }

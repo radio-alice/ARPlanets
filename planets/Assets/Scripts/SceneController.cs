@@ -70,6 +70,6 @@ public class SceneController : MonoBehaviour {
 
     void SetSelectedPlane(DetectedPlane selectedPlane)
     {
-        star.SetSelectedPlane(selectedPlane);
+        //star.SetSelectedPlane(selectedPlane);
     }
 }
