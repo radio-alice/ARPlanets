@@ -1,19 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using GoogleARCore;
-
-#if UNITY_EDITOR
-using Input = GoogleARCore.InstantPreviewInput; //Get input from phone if instant preview is available
-#endif
 
 public class SpawnPlanet : MonoBehaviour {
 
     public float randomForceStrength = 25; //strength of random force applied to plane to make it orbit
     public Material arSpec; //materials
     public Material arDiff;
-    //public GameObject arrow; //arrow to be displayed
+    public GameObject arrow; //arrow to be displayed
 
     bool planetSpawnedNotStarted = false; //tells whether a planet has been spawned (on touch down), but not released (touch up)
     List<GameObject> planets; //list of planets
@@ -35,10 +29,6 @@ public class SpawnPlanet : MonoBehaviour {
 	}
 
 	void Update () {
-        //starSpawned = star.starEnabled; //update local star bool with star state
-
-        //if (starSpawned)
-        //{
             if (Input.GetMouseButtonDown(0))
             {
                     SpawnPlant(); //spawn planet on touch down
@@ -49,7 +39,7 @@ public class SpawnPlanet : MonoBehaviour {
             {
                 t += Time.deltaTime; //increment t
                 ChangePlanetSize(t); //scale planet
-                //DisplayArrow();
+                DisplayArrow();
             }
 
             if (Input.GetMouseButtonUp(0) && planetSpawnedNotStarted == true)
@@ -57,9 +47,7 @@ public class SpawnPlanet : MonoBehaviour {
                 StartPlanet(); //release (add forces to) planet on touch up ONLY if the touch down spawned a planet (rather than destroying a planet)
             }
 
-            currentTouch = Input.mousePosition; //update mouse position
-            //currentTouch = Input.GetTouch(0).position;
-        //}
+            currentTouch = Input.mousePosition; //update mouse position     
 	}
 
     void SpawnPlant(){ //spawns a planet
@@ -83,11 +71,10 @@ public class SpawnPlanet : MonoBehaviour {
                 planet.GetComponent<MeshRenderer>().material = arSpec; //set material to AR compatible
                 planet.GetComponent<SphereCollider>().enabled = false; //disable colliders until released
 
-                //arrow.SetActive(true); //display arrow
-                //arrow.transform.localPosition = Camera.main.ScreenToWorldPoint(touchStart);//move arrow to touch position
-                //arrow.transform.localPosition += Vector3.forward * 30;
+                arrow.SetActive(true); //display arrow
+                arrow.transform.localPosition = Camera.main.ScreenToWorldPoint(touchStart);//move arrow to touch position
+                arrow.transform.localPosition += Vector3.forward * 30;
 
-                //touchStart = Input.GetTouch(0).position;
                 touchStart = Input.mousePosition;
                 planetSpawnedNotStarted = true;
             }
@@ -101,7 +88,6 @@ public class SpawnPlanet : MonoBehaviour {
     }
 
     void StartPlanet(){ //add forces to planet
-        //touchEnd = Input.GetTouch(0).position;
         touchEnd = Input.mousePosition;
         Vector2 dragDirection = (touchStart - touchEnd).normalized;
         dragDistance = Mathf.Abs((touchStart - touchEnd).magnitude) / 300;
@@ -112,7 +98,7 @@ public class SpawnPlanet : MonoBehaviour {
 
         planet.GetComponent<SphereCollider>().enabled = true; //enable collisions
 
-        //arrow.SetActive(false); //remove arrow
+        arrow.SetActive(false); //remove arrow
 
         planetSpawnedNotStarted = false; //tell script that we released the planet that we just spawned
         t = 0f; //reset t
@@ -127,10 +113,10 @@ public class SpawnPlanet : MonoBehaviour {
         }
     }
 
-    //void DisplayArrow(){
-    //    Vector2 touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y);
+    void DisplayArrow(){
+        Vector2 touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y);
 
-    //    arrow.transform.localScale = Vector3.one * touchDisplace.magnitude;
-    //    arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(-touchDisplace.x, -touchDisplace.y) * Mathf.Rad2Deg));
-    //}
+        arrow.transform.localScale = Vector3.one * touchDisplace.magnitude;
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(-touchDisplace.x, -touchDisplace.y) * Mathf.Rad2Deg));
+    }
 }

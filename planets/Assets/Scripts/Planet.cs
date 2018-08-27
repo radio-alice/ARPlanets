@@ -30,7 +30,7 @@ public class Planet : MonoBehaviour {
         if (star != null)
         {
             starMass = star.GetComponent<Rigidbody>().mass; //get star mass
-            starLoc = star.GetComponent<Star>().starPose.position; //get star pos
+            starLoc = star.transform.position; //get star pos
             distance = (transform.position - starLoc).magnitude; //get distance to star
             direction = (starLoc - transform.position).normalized; //get direction to star
             getRigidbody.AddForce((G * mass * starMass / (distance * distance)) * direction); //apply gravitational force of star to planet
