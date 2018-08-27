@@ -91,6 +91,7 @@ public class SpawnPlanet : MonoBehaviour {
                 arrow.transform.localPosition += Vector3.forward * 30;
 
                 touchStart = Input.GetTouch(0).position;
+		planetSpawnedNotStarted = true; 
             }
 
             else if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != null) //if click hits a planet
