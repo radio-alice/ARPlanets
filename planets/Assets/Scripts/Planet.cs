@@ -34,6 +34,7 @@ public class Planet : MonoBehaviour {
             distance = (transform.position - starLoc).magnitude; //get distance to star
             direction = (starLoc - transform.position).normalized; //get direction to star
             getRigidbody.AddForce((G * mass * starMass / (distance * distance)) * direction); //apply gravitational force of star to planet
+            if (distance > 50) Destroy(gameObject); //destroy if it gets too far away
         }           
     }
 
