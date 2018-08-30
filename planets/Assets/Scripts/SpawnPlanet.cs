@@ -54,7 +54,11 @@ public class SpawnPlanet : MonoBehaviour {
         {
             if (hit.transform.gameObject.layer == 9) //if ray hits spawn layer
             {
-                newPlanet = Instantiate(planet, hit.point, Quaternion.identity);  //local reference for planet
+                newPlanet = PlanetPooler.SharedInstance.GetPooledPlanet();  //local reference for planet
+                if (newPlanet != null){
+                    newPlanet.SetActive(true);
+                    newPlanet.transform.position = hit.point;
+                }
 
                 touchStart = Input.mousePosition;
 
@@ -67,7 +71,7 @@ public class SpawnPlanet : MonoBehaviour {
             else if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != null) //if click hits a planet
 
             {
-                Destroy(hit.transform.gameObject); //destroy that MF
+                hit.transform.gameObject.SetActive(false); //destroy that MF
             }
         }
     }
@@ -75,7 +79,7 @@ public class SpawnPlanet : MonoBehaviour {
     void StartPlanet(){ //add forces to planet
         touchEnd = Input.mousePosition;
         Vector2 dragDirection = (touchStart - touchEnd).normalized;
-        dragDistance = Mathf.Abs((touchStart - touchEnd).magnitude)/20;
+        dragDistance = Mathf.Abs((touchStart - touchEnd).magnitude)/300;
 
         Planet planetAction = newPlanet.GetComponent<Planet>(); //access planet script from most recently added planet
         planetAction.AddOrbitalForce(dragDistance, dragDirection); //add some orbital force in proportion to mass/drag distance
