@@ -7,7 +7,6 @@ using UnityEngine;
 public class Star : MonoBehaviour
 {
     public bool starEnabled = false; //used to tell other scripts whether star is anchored and rendered
-    public Pose starPose; //used to tell the planets where star center is
 
     Rigidbody getRigidbody; //yup
     MeshRenderer mRenderer; //get renderer (so we can enable and disable it)
