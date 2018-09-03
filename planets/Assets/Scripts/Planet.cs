@@ -76,13 +76,17 @@ public class Planet : MonoBehaviour {
         float force = dragDistance * forceScalar * Mathf.Sqrt(mass) * 1.87f/Mathf.Sqrt(starDistance); //scale force by finger drag, mass, distance to star
 
         Vector3 starDirection = (transform.position - star.transform.position).normalized; //get star direction
-        Vector3 starTangent = Vector3.Cross(starDirection, Vector3.up); //find tangent to surface of star
-        if (Mathf.Approximately(starTangent.sqrMagnitude, 0f)) starTangent = Vector3.Cross(Vector3.up, starDirection); //check if tangent plane is parallel to star and find another tangent if so
-        float inputAngle = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+        Vector3 starTangent = Vector3.Cross(direction.normalized, starDirection); //find tangent to surface of star
+        if (starTangent.magnitude < .15f) starTangent = Vector3.forward * direction.normalized.magnitude; //check if tangent plane is parallel to star, if so, find another tangent 
+
+        float inputAngle = Mathf.Acos(Vector3.Dot(direction.normalized, starDirection.normalized)) * Mathf.Rad2Deg; //return angle between normal, input direction
         Vector3 inputTangent = Quaternion.AngleAxis(inputAngle, starDirection) * starTangent.normalized; //calculate input direction in world space
 
-        getRigidbody.constraints = RigidbodyConstraints.None;
-        getRigidbody.AddForce(force * inputTangent.normalized); //shoot planet along chosen tangent (causes orbit if all our gravity, force values are balanced)
+        Debug.Log(starTangent);
+        //Debug.Log(inputAngle);
+
+        getRigidbody.constraints = RigidbodyConstraints.None; //unfreeze planet
+        getRigidbody.AddForce(force * inputTangent.normalized); //shoot planet along chosen tangent (causes orbit)
         released = true;
         getCollider.enabled = true;
         t = 0f; //reset t

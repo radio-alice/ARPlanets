@@ -13,6 +13,7 @@ public class SpawnPlanet : MonoBehaviour {
 
     bool starSpawned; //has the star spawned
 
+    Arrow getArrow;
     Vector2 touchStart; //variables to store touch position to calculate launch vector
     Vector2 touchEnd;
     Vector2 currentTouch;
@@ -22,6 +23,7 @@ public class SpawnPlanet : MonoBehaviour {
     void Awake()
     {
         planets = new List<GameObject>(); //intialize planets
+        getArrow = arrow.GetComponent<Arrow>();
 	}
 
 	void Update () {
@@ -35,7 +37,7 @@ public class SpawnPlanet : MonoBehaviour {
         if (Input.GetMouseButton(0) && planetSpawnedNotStarted)
         {
             touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y);
-            arrow.GetComponent<Arrow>().ScaleArrow(touchDisplace);
+            getArrow.ScaleArrow(touchDisplace);
         }
 
         if (Input.GetMouseButtonUp(0) && planetSpawnedNotStarted)
