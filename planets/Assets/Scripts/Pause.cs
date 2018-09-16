@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
+    public static bool paused = true;
 
-    public GameObject play;
-    public GameObject pause;
-    public Texture darken;
+    public GameObject pauseButton;
+    public GameObject pauseMenu;
 
-	
-    public void OnPlayClicked()
+    void Start()
     {
-        play.SetActive(false);
-        pause.SetActive(true);
-        Time.timeScale = 1;
-
+        PauseGame();
     }
 
-    public void OnPauseClicked()
+    public void ResumeGame()
     {
-        pause.SetActive(false);
-        play.SetActive(true);
+        pauseButton.SetActive(true);
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        paused = false;
+    }
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        pauseButton.SetActive(false);
         Time.timeScale = 0;
         AudioListener.pause = true;
+        paused = true;
     }
-
-	public void OnGUI()
-	{
-        if (play.activeInHierarchy == true)
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), darken, ScaleMode.StretchToFill);
-    
-	}
 }

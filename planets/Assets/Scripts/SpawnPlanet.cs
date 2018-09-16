@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnPlanet : MonoBehaviour {
     
     public GameObject arrow; //arrow to be displayed
-    public GameObject planet;
+    public GameObject planet; //planet prefab
 
     bool planetSpawnedNotStarted = false; //tells whether a planet has been spawned (on touch down), but not released (touch up)
     List<GameObject> planets; //list of planets
@@ -13,7 +13,7 @@ public class SpawnPlanet : MonoBehaviour {
 
     bool starSpawned; //has the star spawned
 
-    Arrow getArrow;
+    Arrow getArrow; //arrow script from object
     Vector2 touchStart; //variables to store touch position to calculate launch vector
     Vector2 touchEnd;
     Vector2 currentTouch;
@@ -23,26 +23,32 @@ public class SpawnPlanet : MonoBehaviour {
     void Awake()
     {
         planets = new List<GameObject>(); //intialize planets
-        getArrow = arrow.GetComponent<Arrow>();
+        getArrow = arrow.GetComponent<Arrow>(); //get arrow script
 	}
 
 	void Update () {
-        currentTouch = Input.mousePosition; //update mouse position
-
-        if (Input.GetMouseButtonDown(0))
+        if (!Pause.paused) //only get input if game is not paused
         {
+            currentTouch = Input.mousePosition; //update mouse position
+
+            if (Input.GetMouseButtonDown(0))
+            {
                 SpawnPlant(); //spawn planet on touch down
-        }
+            }
 
-        if (Input.GetMouseButton(0) && planetSpawnedNotStarted)
-        {
-            touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y);
-            getArrow.ScaleArrow(touchDisplace);
-        }
+            if (planetSpawnedNotStarted)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y); //get touch vector
+                    getArrow.ScaleArrow(touchDisplace); //scale arrow by touch vector
+                }
 
-        if (Input.GetMouseButtonUp(0) && planetSpawnedNotStarted)
-        {
-            StartPlanet(); //release (add forces to) planet on touch up ONLY if the touch down spawned a planet (rather than destroying a planet)
+                if (Input.GetMouseButtonUp(0))
+                {
+                    StartPlanet(); //release (add forces to) planet on touch up ONLY if the touch down spawned a planet (rather than destroying a planet)
+                }
+            }
         }
 
 	}
@@ -50,7 +56,7 @@ public class SpawnPlanet : MonoBehaviour {
     void SpawnPlant(){ //spawns a planet
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //initialize ray
         RaycastHit hit;
-        LayerMask layerMask = (1 << 9) | (1 << 10) | (1 << 5); //only shoot rays at layers 5, 9 & 10 (ui, spawn points and planets)
+        LayerMask layerMask = (1 << 9) | (1 << 10); //only shoot rays at layers 9 & 10 (spawn points and planets)
 
         if (Physics.Raycast(ray, out hit, layerMask)) //cast ray
         {
@@ -62,10 +68,10 @@ public class SpawnPlanet : MonoBehaviour {
                     newPlanet.transform.position = hit.point;
                 }
 
-                touchStart = Input.mousePosition;
+                touchStart = Input.mousePosition; //set touch start point as current touch point
 
                 arrow.SetActive(true); //display arrow
-                arrow.GetComponent<Arrow>().Activate(touchStart);
+                getArrow.Activate(touchStart); //start arrow
 
                 planetSpawnedNotStarted = true;
             }
