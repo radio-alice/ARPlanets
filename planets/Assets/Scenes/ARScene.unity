@@ -152,6 +152,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114876698896786350, guid: c10877f7cd5764de18d46d7b777d1faa,
+        type: 2}
+      propertyPath: BackgroundMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 03ad0130a037647aeb60218f61aca114, type: 2}
+    - target: {fileID: 114963366853050710, guid: c10877f7cd5764de18d46d7b777d1faa,
+        type: 2}
+      propertyPath: m_UseRelativeTransform
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c10877f7cd5764de18d46d7b777d1faa, type: 2}
   m_IsPrefabAsset: 0
@@ -230,6 +240,26 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 47f5c15b9ada94cf594acf6d581351ef, type: 2}
+    - target: {fileID: 108128184451703864, guid: c2a91c455779a43fea6d64b4505e3f14,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.37647063
+      objectReference: {fileID: 0}
+    - target: {fileID: 108128184451703864, guid: c2a91c455779a43fea6d64b4505e3f14,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.94117653
+      objectReference: {fileID: 0}
+    - target: {fileID: 108128184451703864, guid: c2a91c455779a43fea6d64b4505e3f14,
+        type: 2}
+      propertyPath: m_DrawHalo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 122192764097787856, guid: c2a91c455779a43fea6d64b4505e3f14,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2a91c455779a43fea6d64b4505e3f14, type: 2}
   m_IsPrefabAsset: 0
@@ -619,6 +649,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseButton: {fileID: 2030919455}
   pauseMenu: {fileID: 746679248}
+--- !u!114 &1470013401 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114529515479840216, guid: c2a91c455779a43fea6d64b4505e3f14,
+    type: 2}
+  m_PrefabInternal: {fileID: 997120166}
+  m_Script: {fileID: 11500000, guid: 6611c11ec486f4a8e81acce1ca841c2e, type: 3}
+--- !u!1 &1734938179 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1834797582633884, guid: 154d60ba0160347539d929e392063a0a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1284756712}
+--- !u!114 &1734938180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1734938179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c669a4cc43174caea1a3748b76f2652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
+    type: 2}
+--- !u!114 &1734938181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1734938179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b685fac266f14e0eba08b916e1d5864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  star: {fileID: 1470013401}
 --- !u!1001 &1772541542
 Prefab:
   m_ObjectHideFlags: 0

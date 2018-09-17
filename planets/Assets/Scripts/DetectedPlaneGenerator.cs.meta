@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 4d5645b79cc5e4251827ffe171ed4658
-timeCreated: 1502314583
-licenseType: Pro
+guid: 8c669a4cc43174caea1a3748b76f2652
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

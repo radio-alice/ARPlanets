@@ -27,6 +27,7 @@ namespace GoogleARCore.Examples.Common
     /// <summary>
     /// Manages the visualization of detected planes in the scene.
     /// </summary>
+    /// modified from Google Examples to enable plane visual disabling
     public class DetectedPlaneGenerator : MonoBehaviour
     {
         /// <summary>
@@ -39,10 +40,13 @@ namespace GoogleARCore.Examples.Common
         /// the application to avoid per-frame allocations.
         /// </summary>
         private List<DetectedPlane> m_NewPlanes = new List<DetectedPlane>();
+        public List<GameObject> detectedPlanes; // list to hold plane visuals
 
-        /// <summary>
-        /// The Unity Update method.
-        /// </summary>
+        public void Awake()
+        {
+            detectedPlanes = new List<GameObject>(); //initialize list
+        }
+
         public void Update()
         {
             // Check that motion tracking is tracking.
@@ -53,13 +57,25 @@ namespace GoogleARCore.Examples.Common
 
             // Iterate over planes found in this frame and instantiate corresponding GameObjects to visualize them.
             Session.GetTrackables<DetectedPlane>(m_NewPlanes, TrackableQueryFilter.New);
-            for (int i = 0; i < m_NewPlanes.Count; i++)
+            if (!Star.starEnabled) //only add visuals if no star enabled
             {
-                // Instantiate a plane visualization prefab and set it to track the new plane. The transform is set to
-                // the origin with an identity rotation since the mesh for our prefab is updated in Unity World
-                // coordinates.
-                GameObject planeObject = Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
-                planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
+                for (int i = 0; i < m_NewPlanes.Count; i++)
+                {
+                    // Instantiate a plane visualization prefab and set it to track the new plane. The transform is set to
+                    // the origin with an identity rotation since the mesh for our prefab is updated in Unity World
+                    // coordinates.
+                    GameObject planeObject = Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
+                    planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
+                    detectedPlanes.Add(planeObject);
+                }
+            }
+
+            if (Star.starEnabled)
+            { //disable visuals once star appears
+                foreach (GameObject plane in detectedPlanes)
+                {
+                    plane.SetActive(false);
+                }
             }
         }
     }

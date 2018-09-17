@@ -27,26 +27,26 @@ public class SpawnPlanet : MonoBehaviour {
 	}
 
 	void Update () {
-        if (!Pause.paused) //only get input if game is not paused
+        if (!Pause.paused && Star.starEnabled && Input.touchCount > 0) //only get input if game is not paused & star is enabled (& there is input to get)
         {
-            currentTouch = Input.mousePosition; //update mouse position
+            currentTouch = Input.GetTouch(0).position; //update touch position
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 SpawnPlant(); //spawn planet on touch down
             }
 
             if (planetSpawnedNotStarted)
             {
-                if (Input.GetMouseButton(0))
+                if (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
                 {
                     touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y); //get touch vector
                     getArrow.ScaleArrow(touchDisplace); //scale arrow by touch vector
                 }
 
-                if (Input.GetMouseButtonUp(0))
+                if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
-                    StartPlanet(); //release (add forces to) planet on touch up ONLY if the touch down spawned a planet (rather than destroying a planet)
+                    StartPlanet(); //release (add forces to) planet on touch up 
                 }
             }
         }
@@ -54,9 +54,9 @@ public class SpawnPlanet : MonoBehaviour {
 	}
 
     void SpawnPlant(){ //spawns a planet
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //initialize ray
+        Ray ray = Camera.main.ScreenPointToRay(currentTouch); //initialize ray
         RaycastHit hit;
-        LayerMask layerMask = (1 << 9) | (1 << 10); //only shoot rays at layers 9 & 10 (spawn points and planets)
+        LayerMask layerMask = (1 << 9) | (1 << 10) | (1 << 5); //only shoot rays at layers 5, 9, 10 (ui, spawn plane and planets)
 
         if (Physics.Raycast(ray, out hit, layerMask)) //cast ray
         {
@@ -68,7 +68,7 @@ public class SpawnPlanet : MonoBehaviour {
                     newPlanet.transform.position = hit.point;
                 }
 
-                touchStart = Input.mousePosition; //set touch start point as current touch point
+                touchStart = currentTouch; //set touch start point as current touch point
 
                 arrow.SetActive(true); //display arrow
                 getArrow.Activate(touchStart); //start arrow
@@ -85,7 +85,7 @@ public class SpawnPlanet : MonoBehaviour {
     }
 
     void StartPlanet(){ //add forces to planet
-        touchEnd = Input.mousePosition;
+        touchEnd = currentTouch;
         Vector2 dragDirection = (touchStart - touchEnd).normalized;
         dragDistance = Mathf.Abs((touchStart - touchEnd).magnitude)/300;
 

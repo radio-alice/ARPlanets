@@ -6,7 +6,6 @@ using UnityEngine;
 public class Planet : MonoBehaviour {
     public float G = 10; //quickly modify gravitational strength
     public float forceScalar = 25; //quickly scale orbital force 
-    public Transform star; //the star to orbit
 
     bool released; //whether or not plane has been released and is affected by forces
 
@@ -16,11 +15,12 @@ public class Planet : MonoBehaviour {
     TrailRenderer getTrail;
     Material getMaterial;
 
+    Transform star; //the star to orbit
+    float starMass; //mass of star
+
     float t = 0f; //counter for size scaling
-    float starMass;
 
-
-	void Awake () 
+    void Awake () 
     {
         star = GameObject.FindGameObjectWithTag("Star").transform;
         starMass = star.GetComponent<Rigidbody>().mass;
@@ -65,8 +65,8 @@ public class Planet : MonoBehaviour {
 
         if (star != null)
         {
-            distance = (transform.position - star.position).magnitude; //get distance to star
-            direction = (star.position - transform.position).normalized; //get direction to star
+            distance = (transform.position - Star.starPose.position).magnitude; //get distance to star
+            direction = (Star.starPose.position - transform.position).normalized; //get direction to star
             getRigidbody.AddForce((G * mass * starMass / (distance * distance)) * direction); //apply gravitational force of star to planet
             if (distance > 50) gameObject.SetActive(false); //remove if it gets too far away
         }           

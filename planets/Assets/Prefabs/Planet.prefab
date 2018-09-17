@@ -216,8 +216,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   G: 10
   forceScalar: 400
-  released: 0
-  star: {fileID: 0}
 --- !u!135 &135390378855556898
 SphereCollider:
   m_ObjectHideFlags: 1
