@@ -83,9 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833cb982a9caf4e21930187e19318ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrow: {fileID: 0}
+  arrow: {fileID: 1193349321120174, guid: 9a608deb68ec3484abace3cebe4ee0df, type: 2}
   planet: {fileID: 1728347759230012, guid: 7b87c1c6c555543fe81f4ef0b4d5df6c, type: 2}
-  pause: {fileID: 0}
 --- !u!114 &114046036705319918
 MonoBehaviour:
   m_ObjectHideFlags: 1
