@@ -11,7 +11,7 @@ public class SpawnPlanet : MonoBehaviour {
     List<GameObject> planets; //list of planets
     GameObject newPlanet; //most recently spawned planet
 
-    bool starSpawned; //has the star spawned
+    static bool starSpawned; //has the star spawned
 
     Arrow getArrow; //arrow script from object
     Vector2 touchStart; //variables to store touch position to calculate launch vector
