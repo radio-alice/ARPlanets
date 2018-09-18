@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour {
     
     public void Activate(Vector2 touchStart){
-        GetComponent<RectTransform>().position = touchStart;//move arrow to touch position
+        transform.position = touchStart;//move arrow to touch position
     }
 
     public void ScaleArrow(Vector2 touchDisplace, Transform planetTransform)
