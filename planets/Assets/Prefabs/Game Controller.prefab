@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 4269946510706990}
   - component: {fileID: 114018553335943460}
   - component: {fileID: 114213407934703416}
+  - component: {fileID: 114142183342384320}
+  - component: {fileID: 114422194750420222}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -103,6 +105,20 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
+--- !u!114 &114142183342384320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1834797582633884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c669a4cc43174caea1a3748b76f2652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
+    type: 2}
+  detectedPlanes: []
 --- !u!114 &114151678767058708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,3 +147,15 @@ MonoBehaviour:
   pooledPlanets: []
   planet: {fileID: 1728347759230012, guid: 7b87c1c6c555543fe81f4ef0b4d5df6c, type: 2}
   amountInPool: 20
+--- !u!114 &114422194750420222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1834797582633884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b685fac266f14e0eba08b916e1d5864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  star: {fileID: 0}

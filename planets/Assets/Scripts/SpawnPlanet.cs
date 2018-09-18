@@ -9,9 +9,7 @@ public class SpawnPlanet : MonoBehaviour {
 
     bool planetSpawnedNotStarted = false; //tells whether a planet has been spawned (on touch down), but not released (touch up)
     GameObject newPlanet; //most recently spawned planet
-
-    static bool starSpawned; //has the star spawned
-
+    
     Arrow getArrow; //arrow script from object
     Vector2 touchStart; //variables to store touch position to calculate launch vector
     Vector2 touchEnd;
@@ -19,7 +17,7 @@ public class SpawnPlanet : MonoBehaviour {
     Vector2 touchDisplace;
     float dragDistance; //how far finger dragged
 
-    void Awake()
+    void Start()
     {
         getArrow = arrow.GetComponent<Arrow>(); //get arrow script
 	}
@@ -39,7 +37,7 @@ public class SpawnPlanet : MonoBehaviour {
                 if (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
                 {
                     touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y); //get touch vector
-                    getArrow.ScaleArrow(touchDisplace); //scale arrow by touch vector
+                    getArrow.ScaleArrow(touchDisplace, newPlanet.transform); //scale arrow by touch vector
                 }
 
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -61,6 +59,7 @@ public class SpawnPlanet : MonoBehaviour {
             if (hit.transform.gameObject.layer == 9) //if ray hits spawn layer
             {
                 newPlanet = PlanetPooler.SharedInstance.GetPooledPlanet();  //local reference for planet
+
                 if (newPlanet != null){
                     newPlanet.SetActive(true);
                     newPlanet.transform.position = hit.point;
@@ -69,7 +68,7 @@ public class SpawnPlanet : MonoBehaviour {
                 touchStart = currentTouch; //set touch start point as current touch point
 
                 arrow.SetActive(true); //display arrow
-                getArrow.Activate(touchStart, newPlanet.transform); //start arrow
+                getArrow.Activate(touchStart); //start arrow
 
                 planetSpawnedNotStarted = true;
             }
