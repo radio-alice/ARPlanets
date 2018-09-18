@@ -8,7 +8,6 @@ public class SpawnPlanet : MonoBehaviour {
     public GameObject planet; //planet prefab
 
     bool planetSpawnedNotStarted = false; //tells whether a planet has been spawned (on touch down), but not released (touch up)
-    List<GameObject> planets; //list of planets
     GameObject newPlanet; //most recently spawned planet
 
     static bool starSpawned; //has the star spawned
@@ -22,7 +21,6 @@ public class SpawnPlanet : MonoBehaviour {
 
     void Awake()
     {
-        planets = new List<GameObject>(); //intialize planets
         getArrow = arrow.GetComponent<Arrow>(); //get arrow script
 	}
 
@@ -41,7 +39,7 @@ public class SpawnPlanet : MonoBehaviour {
                 if (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
                 {
                     touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y); //get touch vector
-                    getArrow.ScaleArrow(touchDisplace); //scale arrow by touch vector
+                    getArrow.ScaleArrow(touchDisplace, newPlanet.transform); //scale arrow by touch vector
                 }
 
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)

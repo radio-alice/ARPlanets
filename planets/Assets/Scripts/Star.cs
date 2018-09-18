@@ -8,44 +8,40 @@ public class Star : MonoBehaviour
 {
     public static bool starEnabled = false; //used to tell other scripts whether star is anchored and rendered
     public static Pose starPose; //used to tell the planets where star center is
+    public GameObject spawnPlane; //plane that planets spawn on
+    public Behaviour halo;
 
     Rigidbody getRigidbody; //yup
     MeshRenderer mRenderer; //get renderer (so we can enable and disable it)
-
-    GameObject spawnPlane; //plane for spawning planets
-
+    
     Anchor anchor; //anchors star in world
     DetectedPlane detectedPlane; //plane detected by ARCore
     float yOffset; //offset of star from plane
+    Transform cam;
 
     void Awake()
     {
         getRigidbody = GetComponent<Rigidbody>(); //initialize rigidbody, mass, renderer, material, light color, freeze the position of star, set raycast layer
         getRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-
+        
         mRenderer = GetComponent<MeshRenderer>(); //get Mesh renderer
-
-        gameObject.layer = 9; //set star layer to same as spawn plane
-
-        spawnPlane = new GameObject(); //create empty transform for raycast collider for planet spawning
+        
         spawnPlane.transform.position = transform.position; //set position = star position
-        spawnPlane.transform.parent = transform; //set parent = star
-        spawnPlane.gameObject.layer = 9; //set layer to planet spawn raycast layer
-        BoxCollider sPCollider = spawnPlane.AddComponent<BoxCollider>(); //add a collider
-        sPCollider.isTrigger = true;  //make it a trigger
-        sPCollider.size = new Vector3(10, 10, 0); //make the collider a (big) plane intersecting the star and facing the camera
+
+        cam = Camera.main.transform;
     }
 
     void Start()
     {
         gameObject.tag = "Star"; //make sure this mf is tagged as a star
         mRenderer.enabled = false; //disable rendering until it's placed and anchored
+        halo.enabled = false;
     }
 
     void Update()
     {
 
-        //Google ARCore tutorial code for plane detection
+        // Google ARCore tutorial code for plane detection
         // The tracking state must be FrameTrackingState.Tracking
         // in order to access the Frame.
         if (Session.Status != SessionStatus.Tracking) return;
@@ -63,7 +59,7 @@ public class Star : MonoBehaviour
         transform.position = new Vector3(transform.position.x,
                     detectedPlane.CenterPose.position.y + yOffset, transform.position.z);
 
-        spawnPlane.transform.LookAt(Camera.main.transform, Vector3.up); //ensure collider  always faces camera
+        spawnPlane.transform.LookAt(cam, Vector3.up); //ensure collider  always faces camera
     }
 
     public void SetSelectedPlane(DetectedPlane detectedPlane)
@@ -96,7 +92,8 @@ public class Star : MonoBehaviour
         // Record the y offset from the plane.
         yOffset = transform.position.y - detectedPlane.CenterPose.position.y;
 
-        mRenderer.enabled = true; // enable the renderer
+        mRenderer.enabled = true; // enable the renderer, halo
+        halo.enabled = true;
         starEnabled = true; //tell other scripts that star has been anchored
     }
 }
