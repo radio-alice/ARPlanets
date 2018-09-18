@@ -37,4 +37,11 @@ public class PlanetPooler : MonoBehaviour
         return null;
     }
 
+    public void Clear(){
+        for (int i = 0; i < amountInPool; i++)
+        {
+            pooledPlanets[i].SetActive(false);
+        }
+    }
+
 }
