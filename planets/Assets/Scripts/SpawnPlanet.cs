@@ -39,7 +39,7 @@ public class SpawnPlanet : MonoBehaviour {
                 if (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
                 {
                     touchDisplace = new Vector2(currentTouch.x - touchStart.x, currentTouch.y - touchStart.y); //get touch vector
-                    getArrow.ScaleArrow(touchDisplace, newPlanet.transform); //scale arrow by touch vector
+                    getArrow.ScaleArrow(touchDisplace); //scale arrow by touch vector
                 }
 
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -69,7 +69,7 @@ public class SpawnPlanet : MonoBehaviour {
                 touchStart = currentTouch; //set touch start point as current touch point
 
                 arrow.SetActive(true); //display arrow
-                getArrow.Activate(touchStart); //start arrow
+                getArrow.Activate(touchStart, newPlanet.transform); //start arrow
 
                 planetSpawnedNotStarted = true;
             }

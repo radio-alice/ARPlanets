@@ -92,6 +92,7 @@ public class Star : MonoBehaviour
         // Record the y offset from the plane.
         yOffset = transform.position.y - detectedPlane.CenterPose.position.y;
 
+        transform.LookAt(cam); //look at camera
         mRenderer.enabled = true; // enable the renderer, halo
         halo.enabled = true;
         starEnabled = true; //tell other scripts that star has been anchored
