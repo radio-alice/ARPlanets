@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using GoogleARCore;
 
 public class SpawnPlanet : MonoBehaviour {
@@ -36,7 +37,7 @@ public class SpawnPlanet : MonoBehaviour {
 
             else if (Star.starEnabled) //if star is enabled
             {
-                if (Input.GetTouch(0).phase == TouchPhase.Began && !planetSpawnedNotStarted)
+                if (Input.GetTouch(0).phase == TouchPhase.Began && !planetSpawnedNotStarted && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
                    SpawnPlant(); //spawn planet on touch down
                 }
@@ -71,22 +72,19 @@ public class SpawnPlanet : MonoBehaviour {
         }
     }
 
-    void SpawnPlant(){ //spawns a planet
+    void SpawnPlant()
+    { //spawns a planet
         Ray ray = Camera.main.ScreenPointToRay(currentTouch); //initialize ray
         RaycastHit hit;
-        LayerMask layerMask = (1 << 9) | (1 << 10) | (1 << 5); //only shoot rays at layers 5, 9, 10 (ui, spawn plane and planets)
+        LayerMask layerMask = (1 << 9) | (1 << 10); //only shoot rays at layers 9, 10 (spawn plane and planets)
 
         if (Physics.Raycast(ray, out hit, layerMask)) //cast ray
         {
-            if (hit.transform.gameObject.layer == 5){
-                return;
-            }
-
-            else if (hit.transform.gameObject.layer == 9) //if ray hits spawn layer
+            if (hit.transform.gameObject.layer == 9) //if ray hits spawn layer
             {
                 newPlanet = PlanetPooler.SharedInstance.GetPooledPlanet();  //local reference for planet
 
-                if (newPlanet != null)
+                if (newPlanet != null) //if there is a planet available in pool
                 {
                     newPlanet.SetActive(true);
                     newPlanet.transform.position = hit.point;
