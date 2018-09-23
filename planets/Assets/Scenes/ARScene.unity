@@ -162,6 +162,21 @@ Prefab:
       propertyPath: m_UseRelativeTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,
+        type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0.1792453
+      objectReference: {fileID: 0}
+    - target: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0.1792453
+      objectReference: {fileID: 0}
+    - target: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0.1792453
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c10877f7cd5764de18d46d7b777d1faa, type: 2}
   m_IsPrefabAsset: 0
@@ -473,6 +488,11 @@ Prefab:
       propertyPath: background
       value: 
       objectReference: {fileID: 1636572263}
+    - target: {fileID: 114018553335943460, guid: 154d60ba0160347539d929e392063a0a,
+        type: 2}
+      propertyPath: star
+      value: 
+      objectReference: {fileID: 1470013401}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 154d60ba0160347539d929e392063a0a, type: 2}
   m_IsPrefabAsset: 0

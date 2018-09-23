@@ -4,9 +4,6 @@ using UnityEngine;
 using GoogleARCore;
 
 public class SceneController : MonoBehaviour{
-
-    public Star star;
-
     void Start()
     {
         QuitOnConnectionErrors();
@@ -40,31 +37,5 @@ public class SceneController : MonoBehaviour{
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-        if (!Star.starEnabled) ProcessTouches(); //if star hasn't been enabled, get touch input
-    }
-
-    void ProcessTouches()
-    {
-        Touch touch;
-        if (Input.touchCount != 1 ||
-            (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        {
-            return;
-        }
-
-        TrackableHit hit;
-        TrackableHitFlags raycastFilter =
-            TrackableHitFlags.PlaneWithinBounds |
-            TrackableHitFlags.PlaneWithinPolygon;
-
-        if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
-        {
-            SetSelectedPlane(hit.Trackable as DetectedPlane);
-        }
-    }
-
-    void SetSelectedPlane(DetectedPlane selectedPlane)
-    {
-        star.SetSelectedPlane(selectedPlane);
     }
 }
