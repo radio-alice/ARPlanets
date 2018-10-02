@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   G: 10
-  forceScalar: 400
+  forceScalar: 300
 --- !u!135 &135390378855556898
 SphereCollider:
   m_ObjectHideFlags: 1

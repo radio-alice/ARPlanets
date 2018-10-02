@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
 
+/// <summary>
+/// Responsible for providing the plane for planets
+/// to spawn on and for handling initial star placement.
+/// </summary>
+
 [RequireComponent(typeof(Rigidbody))]
 public class Star : MonoBehaviour
 {
@@ -11,7 +16,7 @@ public class Star : MonoBehaviour
     public GameObject spawnPlane; //plane that planets spawn on
     public Behaviour halo;
 
-    Rigidbody getRigidbody; //yup
+    Rigidbody getRigidbody; 
     MeshRenderer mRenderer; //get renderer (so we can enable and disable it)
     
     Anchor anchor; //anchors star in world

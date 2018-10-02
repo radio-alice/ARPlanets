@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
 
+/// <summary>
+/// Pauses and unpauses game
+/// </summary>
+
 public class Pause : MonoBehaviour
 {
     public static bool paused = true;

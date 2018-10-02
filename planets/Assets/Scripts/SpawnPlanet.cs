@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using GoogleARCore;
 
+/// <summary>
+/// Responsible for touch processing- 
+/// sends data to planet, star, arrow scripts
+/// </summary>
+
 public class SpawnPlanet : MonoBehaviour {
     
     public GameObject arrow; //arrow to be displayed

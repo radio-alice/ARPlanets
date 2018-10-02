@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Creates list of 20 planets, which are then activated and 
+/// deactivated rather than instantiated and destroyed at runtime.
+/// </summary>
+
 public class PlanetPooler : MonoBehaviour
 {
     public static PlanetPooler SharedInstance;

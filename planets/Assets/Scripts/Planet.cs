@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for planet physics and motion
+/// </summary>
+
 [RequireComponent(typeof(Rigidbody))]
 public class Planet : MonoBehaviour {
     public float G = 10; //quickly modify gravitational strength
-    public float forceScalar = 25; //quickly scale orbital force 
+    public float forceScalar = 18; //quickly scale orbital force 
 
     bool released; //whether or not plane has been released and is affected by forces
 
