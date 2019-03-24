@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for planet physics and motion
+/// </summary>
+
 [RequireComponent(typeof(Rigidbody))]
 public class Planet : MonoBehaviour {
     public float G = 10; //quickly modify gravitational strength
-    public float forceScalar = 25; //quickly scale orbital force 
-    public bool released; //whether or not plane has been released and is affected by forces
-    public Transform star; //the star to orbit
+    public float forceScalar = 18; //quickly scale orbital force 
+
+    bool released; //whether or not plane has been released and is affected by forces
 
     Rigidbody getRigidbody; 
     float mass; //mass of planet (taken from rigidbody)
     SphereCollider getCollider;
     TrailRenderer getTrail;
-    Material material;
+    Material getMaterial;
+
+    Transform star; //the star to orbit
+    float starMass; //mass of star
 
     float t = 0f; //counter for size scaling
-    float starMass;
 
-
-	void Awake () {
+    void Awake () 
+    {
         star = GameObject.FindGameObjectWithTag("Star").transform;
         starMass = star.GetComponent<Rigidbody>().mass;
         transform.parent = star;// set parent to star
@@ -29,8 +35,8 @@ public class Planet : MonoBehaviour {
 
         getCollider = GetComponent<SphereCollider>();
         getTrail = GetComponent<TrailRenderer>();
-        material = GetComponent<MeshRenderer>().material;
-        }
+        getMaterial = GetComponent<MeshRenderer>().material;
+    }
 
     void OnEnable()
 	{
@@ -39,7 +45,7 @@ public class Planet : MonoBehaviour {
         getRigidbody.constraints = RigidbodyConstraints.FreezeAll; //freeze movement
         getTrail.Clear(); //clear previous trail
 
-        material.color = Random.ColorHSV(0, 1, .2f, 1, .3f, 1, 1, 1);//random color
+        getMaterial.color = Random.ColorHSV(0, 1, .2f, 1, .3f, 1, 1, 1);//random color
         ScaleSize(t); //scale up and down (so there's no blip when scale size kicks in in Update())
 	}
 
@@ -63,8 +69,8 @@ public class Planet : MonoBehaviour {
 
         if (star != null)
         {
-            distance = (transform.position - star.position).magnitude; //get distance to star
-            direction = (star.position - transform.position).normalized; //get direction to star
+            distance = (transform.position - Star.starPose.position).magnitude; //get distance to star
+            direction = (Star.starPose.position - transform.position).normalized; //get direction to star
             getRigidbody.AddForce((G * mass * starMass / (distance * distance)) * direction); //apply gravitational force of star to planet
             if (distance > 50) gameObject.SetActive(false); //remove if it gets too far away
         }           
@@ -82,13 +88,10 @@ public class Planet : MonoBehaviour {
         float inputAngle = Mathf.Acos(Vector3.Dot(direction.normalized, starDirection.normalized)) * Mathf.Rad2Deg; //return angle between normal, input direction
         Vector3 inputTangent = Quaternion.AngleAxis(inputAngle, starDirection) * starTangent.normalized; //calculate input direction in world space
 
-        Debug.Log(starTangent);
-        //Debug.Log(inputAngle);
-
         getRigidbody.constraints = RigidbodyConstraints.None; //unfreeze planet
         getRigidbody.AddForce(force * inputTangent.normalized); //shoot planet along chosen tangent (causes orbit)
-        released = true;
-        getCollider.enabled = true;
+        released = true; //tell script it's released
+        getCollider.enabled = true; //enable collisions
         t = 0f; //reset t
     }
 
